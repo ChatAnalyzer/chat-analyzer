@@ -1,10 +1,9 @@
-import { getWordCount } from './getWordCount';
-
+import { getWordsCount } from './getWordCount';
 
 describe( 'getWordCount', () => {
 
   it( 'should be function', () => {
-    expect( typeof getWordCount ).toBe( 'function' );
+    expect( typeof getWordsCount ).toBe( 'function' );
   } );
 
   it( 'should return count of words in lowercase', () => {
@@ -13,7 +12,7 @@ describe( 'getWordCount', () => {
       '_message': 1,
     };
 
-    let result = getWordCount( mockedMessages );
+    let result = getWordsCount( mockedMessages );
     expect( result ).toEqual( expectedResult );
 
   } );
@@ -22,7 +21,7 @@ describe( 'getWordCount', () => {
     let mockedMessages = [ 'Message, , '];
     let expectedResult = {"_": 4, "_message": 1};
 
-    let result = getWordCount( mockedMessages );
+    let result = getWordsCount( mockedMessages );
     expect( result ).toEqual( expectedResult );
 
   } );
@@ -40,7 +39,7 @@ describe( 'getWordCount', () => {
       '_one'    : 1
     };
 
-    let result = getWordCount( mockedMessages );
+    let result = getWordsCount( mockedMessages );
     expect( result ).toEqual( expectedResult );
 
   } );
