@@ -1,7 +1,7 @@
 {
   "name": "chat-analyzer",
   "description": "analyze and create chat statistics",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "main": "dist/index.bundle.js",
   "license": "MIT",
   "repository": {
