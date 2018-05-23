@@ -1,4 +1,4 @@
-const WORD_DECIMETER = /[\b\s(?:,| )+]/;
+import {WORD_DECIMETER} from './constants';
 
 const countAWordReducer = ( counterObject, word ) => {
 

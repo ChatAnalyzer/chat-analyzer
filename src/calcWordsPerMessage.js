@@ -1,14 +1,17 @@
+import { messageToArrayOfWords } from './utils';
+
+const countWords = ( total, message ) => {
+  return total + messageToArrayOfWords( message ).length;
+};
+
+const getAverage = ( messagesLength, allWordsInAllMessagesCount ) => {
+  return Math.round( allWordsInAllMessagesCount / messagesLength * 100 ) / 100;
+};
+
 export const calcWordsPerMessage = ( messages ) => {
-  var totalWordCount = 0;
 
-  for (var messageIndex = 0; messageIndex < messages.length; messageIndex++) {
-    let message = messages[messageIndex];
+  let allWordsInAllMessagesCount = messages.reduce( countWords, 0 );
+  let average                    = getAverage( messages.length, allWordsInAllMessagesCount );
 
-    totalWordCount = totalWordCount + message.trim().split(/\s+/).length;
-  }
-
-  let averageWordsPerMessage = Math.round(totalWordCount/ messages.length*100)/100;
-
-  return [averageWordsPerMessage, totalWordCount];
-
-}
+  return [ average, allWordsInAllMessagesCount ];
+};
