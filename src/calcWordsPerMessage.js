@@ -1,12 +1,14 @@
-export const calcWordsPerMessage = (messages ) => {
-  var totalWords = 0;
+export const calcWordsPerMessage = ( messages ) => {
+  var totalWordCount = 0;
 
-  for (var i = 0; i < messages.length; i++) {
-    totalWords = totalWords + messages[i].trim().split(/\s+/).length;
+  for (var messageIndex = 0; messageIndex < messages.length; i++) {
+    let message = messages[messageIndex];
+
+    totalWordCount = totalWordCount + message.trim().split(/\s+/).length;
   }
 
-  let averageWordsPerMessage = Math.round(totalWords/messages.length*100)/100;
+  let averageWordsPerMessage = Math.round(totalWordCount/ messages.length*100)/100;
 
-  return [averageWordsPerMessage, totalWords];
+  return [averageWordsPerMessage, totalWordCount];
 
 }
