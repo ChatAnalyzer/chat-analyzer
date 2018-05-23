@@ -10,7 +10,6 @@ describe( 'calcWordsPerMessage', () => {
     let mockedMessages = [ 'This is the first message', 'This is the second message'];
 
     let result = calcWordsPerMessage( mockedMessages );
-    expect( result ).to.be.an( 'array' );
     expect( result.length ).toBe( 2 );
 
   } );
@@ -19,7 +18,7 @@ describe( 'calcWordsPerMessage', () => {
 
     let mockedMessages = [ 'This is the first message', 'This is the second message'];
     let expectedResult = [
-      10, 5
+      5, 10
     ];
 
     let result = calcWordsPerMessage( mockedMessages );

@@ -1,19 +1,12 @@
-// returns number of words in one message
-export const messageCounter = (counterObject, message) => {
-
-  var wordCount = message.trim().split(/\s+/).length;
-
-  return counterObject = counterObject + wordCount;
-}
-
-// returns how many words an average message contains
-export const calcWordsPerMessage = ( messages ) => {
+export const calcWordsPerMessage = (messages ) => {
   var totalWords = 0;
-  let initialCounterObject = {};
 
-  let totalWordCount = messages.reduce(messageCounter, initialCounterObject);
+  for (var i = 0; i < messages.length; i++) {
+    totalWords = totalWords + messages[i].trim().split(/\s+/).length;
+  }
 
-  let averageWordsPerMessage = Math.round( (tlt/messages.length*100) / 100 );
+  let averageWordsPerMessage = Math.round(totalWords/messages.length*100)/100;
 
-  return [averageWordsPerMessage,totalWordCount];
+  return [averageWordsPerMessage, totalWords];
+
 }
