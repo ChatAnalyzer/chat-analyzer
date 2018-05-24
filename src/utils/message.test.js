@@ -26,7 +26,7 @@ describe( 'utils>message', () => {
   it( 'should skip commas', () => {
 
     let message       = 'Two hundred euros,I think,is sufficient.';
-    let expectedArray = [ "Two", "hundred", "euros", "I", "think", "is", "sufficient." ];
+    let expectedArray = [ "Two", "hundred", "euros", "I", "think", "is", "sufficient" ];
     let result        = messageToArrayOfWords( message );
 
     expect( result ).toEqual( expectedArray );
