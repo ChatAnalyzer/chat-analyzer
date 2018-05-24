@@ -19,7 +19,7 @@ describe( 'getWordCount', () => {
 
   it( 'should split words correctly', () => {
     let mockedMessages = [ 'Message, , '];
-    let expectedResult = {"_": 4, "_message": 1};
+    let expectedResult = {"_": 3, "_message": 1};
 
     let result = getWordsCount( mockedMessages );
     expect( result ).toEqual( expectedResult );

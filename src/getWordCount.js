@@ -1,4 +1,4 @@
-const WORD_DECIMETER = /[\b\s(?:,| )+]/;
+import {messageToArrayOfWords} from './utils';
 
 const countAWordReducer = ( counterObject, word ) => {
 
@@ -12,8 +12,7 @@ const countAWordReducer = ( counterObject, word ) => {
 };
 
 const messagesReducer = ( counterObject, message ) => {
-  return message
-    .split( WORD_DECIMETER )
+  return messageToArrayOfWords(message)
     .reduce( countAWordReducer, counterObject );
 };
 
