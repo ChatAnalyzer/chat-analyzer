@@ -1,28 +1,21 @@
-import { STOPWORDS } from './constants';
+import {  STOPWORDS } from './constants';
 
-
-export const removeStopwords = (words, language) => {
-
-  var Stopwords = STOPWORDS[language];
-
-  var delIndexArray = [];
-  var delIndex = 0;
-
-  for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-
-    if (Stopwords.indexOf(words[wordIndex]) > -1) {
-      delIndexArray[delIndex] = wordIndex;
-      delIndex++;
+const filterWords = (wordCountObject, wordsToFilterOut) => {
+  for (var key in wordCountObject) {
+    let containsWord = (wordsToFilterOut.indexOf(key) > -1);
+    if (wordCountObject.hasOwnProperty(key) && containsWord) {
+      // BUG: ?!? This does not delete the key
+      delete wordCountObject.key;
     }
   }
+  return wordCountObject;
+}
 
-  for (var delIndex = 0; delIndex < delIndexArray.length; delIndex++) {
-    words.splice(delIndexArray[delIndex]-delIndex,1);
-  }
+export const removeStopwords = (wordCountObject, language) => {
+  var stopwords = STOPWORDS[language];
+  return filterWords(wordCountObject, stopwords)
 
-  return words;
-
-    //
+  // TODO: MOVE HTML
     // // get element
     // div = document.getElementById("wordsByUsage"+i);
     // // remove old content
