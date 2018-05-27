@@ -15,7 +15,7 @@ const filterWords = (wordCountObject, wordsToFilterOut) => {
 
 export const removeStopwords = (wordCountObject, language) => {
   var stopwords = STOPWORDS[language];
-  var testObject = wordCountObject;
+  var testObject = Object.assign(wordCountObject);
   return filterWords(testObject, stopwords)
 
   // TODO: MOVE HTML
