@@ -1,3 +1,5 @@
 {
-"presets":[["env"]], "plugins": ["transform-object-rest-spread"]
+"presets":[["env"]], "plugins": ["transform-object-rest-spread",[ "inline-import", {
+  "extensions": [".txt"]
+}]]
 }
