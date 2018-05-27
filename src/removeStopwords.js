@@ -2,10 +2,9 @@ import {  STOPWORDS } from './constants';
 
 const filterWords = (wordCountObject, wordsToFilterOut) => {
   for (var key in wordCountObject) {
-    let containsWord = (wordsToFilterOut.indexOf(key) > -1);
-    if (wordCountObject.hasOwnProperty(key) && containsWord) {
-      // BUG: ?!? This does not delete the key
-      delete wordCountObject.key;
+    var containsWord = (wordsToFilterOut.indexOf(key) > -1);
+    if (containsWord) {
+      delete wordCountObject[key];
     }
   }
   return wordCountObject;
@@ -13,7 +12,8 @@ const filterWords = (wordCountObject, wordsToFilterOut) => {
 
 export const removeStopwords = (wordCountObject, language) => {
   var stopwords = STOPWORDS[language];
-  return filterWords(wordCountObject, stopwords)
+  var testObject = wordCountObject;
+  return filterWords(testObject, stopwords)
 
   // TODO: MOVE HTML
     // // get element

@@ -7,10 +7,10 @@ describe( 'removeStopwords', () => {
   } );
 
   it( 'should remove stopords', () => {
-    let mockedWords = { 'I': 1, 'asdasd': 1};
+    let mockedWords = { 'i': 1, 'asdasd': 1, "'ll": 1,"'tis":1,"'twas":1};
     let mockedLanguage = 'en';
     let expectedResult = {
-      '_asdasd': 1
+      'asdasd': 1
     };
 
     let result = removeStopwords( mockedWords, mockedLanguage );
