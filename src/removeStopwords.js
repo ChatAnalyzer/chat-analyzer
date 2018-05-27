@@ -1,3 +1,6 @@
+// SUGGESTIONS: refacture ino shouldDisplay
+// and this function take a word and the language, then it returns true or false, and this function should be used wherever you are trying to display the words
+
 import {  STOPWORDS } from './constants';
 
 const filterWords = (wordCountObject, wordsToFilterOut) => {
