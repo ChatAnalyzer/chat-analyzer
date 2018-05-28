@@ -5,11 +5,11 @@ export const usecases = [
   ],
   [
     '8/22/14, 12:41:13 PM: NAME: text',
-    [ '8/22/14, 12:41:13 PM: NAME: text', '8/22/14', '12:41:13', 'PM: ', 'NAME', 'text' ]
+    [ '8/22/14, 12:41:13 PM: NAME: text', '8/22/14', '12:41:13', 'PM', 'NAME', 'text' ]
   ],
   [
     '3/21/18, 11:58 AM - NAME: text',
-    [ '3/21/18, 11:58 AM - NAME: text', '3/21/18', '11:58', 'AM ', 'NAME', 'text' ]
+    [ '3/21/18, 11:58 AM - NAME: text', '3/21/18', '11:58', 'AM', 'NAME', 'text' ]
   ],
   [
     '14/01/2018, 09:54 - NAME: text',

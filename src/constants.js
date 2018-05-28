@@ -1,1 +1,1 @@
-export const WORD_DECIMETER = /[^\b\s ()?!:,|\[\]+.-;"^'`´&-]+/g;
+export const WORD_DECIMETER = /[^\b\s ()?!:,|\[\]+.\-;"^'`´&]+/g;
