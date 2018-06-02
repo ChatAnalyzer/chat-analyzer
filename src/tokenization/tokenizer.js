@@ -1,140 +1,78 @@
-export const tokenizer = function ( content ) {
+import { messageToArrayOfWords } from '../utils';
+
+export const tokenizer = function ( content, includeMatches ) {
   let explainedPattern = [
 
-    //might start with [
-    "(\\[?)",
+    //optional '[' or LEFT-TO-RIGHT MARK '\u200E'
+    '(?:[\\[\u200E])?',
 
-    /*
-    * matches two occurrences of (1-4 digits followed by single character (a dash '-' or slash '/' or a dot '.')
-    * representing day and month,  followed by 2-4 digits representing the year), this means it will match all the following:
-    *
-    * single day, single month, year at the end
-    * - 1.1.18
-    * - 1.1.218
-    * - 1.1.2018
-    *
-    * double day, single month, year at the end
-    * - 12.1.18
-    * - 12.1.218
-    * - 12.1.2018
-    *
-    * double day, double month, year at the end
-    * - 12.12.18
-    * - 12.12.218
-    * - 12.12.2018
-    *
-    * single day, single month, year at the beginning
-    * - 18.1.1
-    * - 218.1.1
-    * - 2018.1.1
-    *
-    * double day, single month, year at the beginning
-    * - 18.12.1
-    * - 218.12.1
-    * - 2018.12.1
-    *
-    * double day, double month, year at the beginning
-    * - 18.12.12
-    * - 218.12.12
-    * - 2018.12.12
-    *
-    * single day, single month, year at the end
-    * - 1-1-18
-    * - 1-1-218
-    * - 1-1-2018
-    *
-    * double day, single month, year at the end
-    * - 12-1-18
-    * - 12-1-218
-    * - 12-1-2018
-    *
-    * double day, double month, year at the end
-    * - 12-12-18
-    * - 12-12-218
-    * - 12-12-2018
-    *
-    * single day, single month, year at the beginning
-    * - 18-1-1
-    * - 218-1-1
-    * - 2018-1-1
-    *
-    * double day, single month, year at the beginning
-    * - 18-12-1
-    * - 218-12-1
-    * - 2018-12-1
-    *
-    * double day, double month, year at the beginning
-    * - 18-12-12
-    * - 218-12-12
-    * - 2018-12-12
-    *
-    * single day, single month, year at the end
-    * - 1/1/18
-    * - 1/1/218
-    * - 1/1/2018
-    *
-    * double day, single month, year at the end
-    * - 12/1/18
-    * - 12/1/218
-    * - 12/1/2018
-    *
-    * double day, double month, year at the end
-    * - 12/12/18
-    * - 12/12/218
-    * - 12/12/2018
-    *
-    * single day, single month, year at the beginning
-    * - 18/1/1
-    * - 218/1/1
-    * - 2018/1/1
-    *
-    * double day, single month, year at the beginning
-    * - 18/12/1
-    * - 218/12/1
-    * - 2018/12/1
-    *
-    * double day, double month, year at the beginning
-    * - 18/12/12
-    * - 218/12/12
-    * - 2018/12/12
-    * */
-    "((\\d{1,4}(\\-|\\/|\\.){1}){2}\\d{1,4})",
+    //date
+    '((?:\\d{1,4}[\\/\\-\\.]*){2,3})',
 
-    /*
-    * separator between date and time with one occurrence for one of:
-    * - a space followed by 1-3 characters then another space
-    * - a comma followed by a space
-    * - any character followed by a space
-    * */
+    //separators
+    '(?:[,\\s]+)',
 
-    "((\\s.{1,3}\\s|\\s)|,\\s|\\.\\s){1}",
+    //optional 'um' or similar
+    '(?:[^\\s]+\\s)?',
 
-    // a group for date and time
-    "(",
+    //time
+    '((?:\\d{1,2}:?){2}\\d{1,2})',
 
-    /*
-    * match time
-    * match 1-2 digits followed by a colon ':' (hours), followed by two digits (minutes),
-    * followed by an optional (colon followed by two digits) which are the seconds
-    * */
-    "((\\d{1,2}\\:)\\d{2}(:\\d{2})?)",
+    //separators
+    '(?:[:\\-\\s\\]]+)',
 
-    /*
-    * day/night
-    * */
-    "(\\s(a|p)m?|\\s(A|P)?M|\\s(a|p)?\\.(\\s)?\\m.)?",
+    //daynight
+    '([ap]\\.?\\s?m\\.?)?',
 
-    ")",
+    //separators
+    '(?:[:\\s\\-\\]]*)?',
 
-    /*
-    * it might end with one of:
-    * - ']' followed by a space
-    * - a space followed by a dash '-' followed by another space
-    * - a colon ':'
-    * */
-    "(\\]\\s|\\s\\-\\s|\\:)"
-  ].join( "" );
+    //name and message
+    //this assumes that the name doesn't have ':'
+    //which is unlikely, so we need to improve this
+    //in the future, maybe asking the user to select
+    //usernames prior start the tokenizer
+    '([^:]*):\\s?(.+)'
+  ].join( '' );
 
-  let re = new RegExp( explainedPattern, "g" );
-  return re.exec( content )
-}
+
+  let re = new RegExp( explainedPattern, 'gi' );
+
+  let data = {
+    dates     : [],
+    times     : [],
+    names     : [],
+    messages  : [],
+    totalWords: 0
+  };
+
+  let matches = [];
+
+  let match;
+
+  while ( match = re.exec( content ) ) {
+
+    includeMatches && matches.push( match );
+
+    //first element is the whole match,
+    //fourth element is day night (am/pm)
+    //we don't use them for any statistics now,
+    //it would be nice for day/night statistics.
+    let [ /*all*/, date, time, /*daynight*/, name, message ] = match;
+
+    let messageAsArrayOfWords = messageToArrayOfWords( message );
+
+    data.dates.push( date );
+    data.times.push( time );
+    data.names.push( name );
+
+    //this saves two more loop in the future
+    data.totalWords += messageAsArrayOfWords.length;
+    data.messages.push( messageAsArrayOfWords );
+  }
+
+  return {
+    matches,
+    data
+  }
+};
