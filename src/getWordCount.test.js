@@ -18,15 +18,15 @@ describe( 'getWordCount', () => {
   } );
 
   it( 'should split words correctly', () => {
-    let mockedMessages = [ 'Message, , '];
-    let expectedResult = {"_": 3, "_message": 1};
+    let mockedMessages = [ 'Message()?!:,|[]+.-;\"^\'`´&- ', 'Message,  ,. Message. + . - Message?'];
+    let expectedResult = { "_message": 4 }
 
     let result = getWordsCount( mockedMessages );
     expect( result ).toEqual( expectedResult );
 
   } );
 
-  it( 'should return count of all messages', () => {
+  it( 'should return count of all words', () => {
     let mockedMessages = [ 'first message', 'second message here', 'and the last one' ];
     let expectedResult = {
       '_first'  : 1,
@@ -43,5 +43,6 @@ describe( 'getWordCount', () => {
     expect( result ).toEqual( expectedResult );
 
   } );
+
 
 } );
