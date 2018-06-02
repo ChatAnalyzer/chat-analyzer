@@ -6,7 +6,7 @@ describe( 'removeStopwords', () => {
     expect( typeof removeStopwords ).toBe( 'function' );
   } );
 
-  it( 'should remove stopords', () => {
+  it( 'should remove stopwords', () => {
     let mockedWords = { 'i': 1, 'asdasd': 1, "'ll": 1,"'tis":1,"'twas":1};
     let mockedLanguage = 'en';
     let expectedResult = {
